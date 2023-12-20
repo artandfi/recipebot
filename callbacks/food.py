@@ -2,18 +2,18 @@ from enum import Enum
 from telegram import Update, ReplyKeyboardMarkup
 from telegram.ext import ContextTypes
 from states import State
-from callbacks.basic import buttons, command_with_buttons, YES_NO
+from callbacks.basic import buttons, command_with_buttons, strs, YES_NO
 
 
 class FoodOptions(Enum):
-    food = ["Snack", "Main Course", "Side Dish", "Soup", "Salad", "Dessert"]
-    cooking_type = ["Boiled", "Fried", "Baked", "Smoked", "Preserved", "Raw"]
-    soup_type = ["Clear", "Creamy"]
-    flavor = ["Sweet", "Sour", "Bitter", "Salty", "Spicy"]
-    spicy_level = ["Low", "Mild", "Hot"]
-    main_ingredient = ["Meat", "Seafood", "Fruit", "Veggies", "Other"]
-    meat_type = ["Chicken", "Pork", "Beef", "Lamb", "Veal", "Rabbit", "Turkey", "Duck", "Venison", "Other"]
-    seafood_type = ["White Fish", "Red Fish", "Molluscs", "Squid", "Crustaceans"]
+    food = [strs[x] for x in ['snack', 'main_course', 'side_dish', 'soup', 'salad', 'dessert']]
+    cooking_type = [strs[x] for x in ['boiled', 'fried', 'baked', 'smoked', 'preserved', 'raw']]
+    soup_type = [strs[x] for x in ['clear', 'creamy']]
+    flavor = [strs[x] for x in ['sweet', 'sour', 'bitter', 'salty', 'spicy']]
+    spicy_level = [strs[x] for x in ['low', 'medium', 'hot']]
+    main_ingredient = [strs[x] for x in ['meat', 'seafood', 'fruit', 'veggies', 'other']]
+    meat_type = [strs[x] for x in ['chicken', 'pork', 'beef', 'mutton', 'veal', 'rabbit', 'turkey', 'duck', 'venison', 'other']]
+    seafood_type = [strs[x] for x in ['white_fish', 'red_fish', 'molluscs', 'squid', 'crustaceans']]
 
 
 async def food(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -21,10 +21,10 @@ async def food(update: Update, context: ContextTypes.DEFAULT_TYPE):
         update,
         context,
         FoodOptions.food,
-        "Please choose the type of the meal",
+        strs['meal_type_prompt'],
         State.meal_type,
-        user_data_key="Meal type",
-        placeholder="Meal type"
+        user_data_key=strs['meal_type'],
+        placeholder=strs['meal_type']
     )
 
 
@@ -33,10 +33,10 @@ async def cooking_type(update: Update, context: ContextTypes.DEFAULT_TYPE):
         update,
         context,
         FoodOptions.cooking_type,
-        "Please choose the way you'd like to cook your meal",
+        strs['cooking_type_prompt'],
         State.cooking_type,
-        user_data_key="Way of cooking",
-        placeholder="Way of cooking"
+        user_data_key=strs['cooking_type'],
+        placeholder=strs['cooking_type']
     )
 
 
@@ -44,11 +44,11 @@ async def soup_type(update: Update, context: ContextTypes.DEFAULT_TYPE):
     reply_keyboard = buttons(FoodOptions.soup_type)
 
     await update.message.reply_text(
-        "Please choose the soup texture",
+        strs['soup_texture_prompt'],
         reply_markup=ReplyKeyboardMarkup(
             reply_keyboard,
             one_time_keyboard=True,
-            input_field_placeholder="Soup texture"
+            input_field_placeholder=strs['soup_texture']
         )
     )
 
@@ -56,10 +56,10 @@ async def soup_type(update: Update, context: ContextTypes.DEFAULT_TYPE):
         update,
         context,
         FoodOptions.soup_type,
-        "Please choose the soup texture",
+        strs['soup_texture_prompt'],
         State.soup_type,
-        user_data_key="Soup texture",
-        placeholder="Soup texture"
+        user_data_key=strs['soup_texture'],
+        placeholder=strs['soup_texture']
     )
 
 
@@ -68,9 +68,9 @@ async def dessert_milk(update: Update, context: ContextTypes.DEFAULT_TYPE):
         update,
         context,
         YES_NO,
-        "Would you like milk in your dessert?",
+        strs['dessert_milk_prompt'],
         State.dessert_milk,
-        user_data_key="Dessert with milk"
+        user_data_key=strs['dessert_milk']
     )
 
 
@@ -79,9 +79,9 @@ async def dessert_fruit(update: Update, context: ContextTypes.DEFAULT_TYPE):
         update,
         context,
         YES_NO,
-        "Would you like fruit in your dessert?",
+        strs['dessert_fruit_prompt'],
         State.dessert_fruit,
-        user_data_key="Dessert with fruit"
+        user_data_key=strs['dessert_fruit']
     )
 
 
@@ -90,9 +90,9 @@ async def dessert_sugar(update: Update, context: ContextTypes.DEFAULT_TYPE):
         update,
         context,
         YES_NO,
-        "Would you like sugar in your dessert?",
+        strs['dessert_sugar_prompt'],
         State.dessert_sugar,
-        user_data_key="Dessert with sugar"
+        user_data_key=strs['dessert_sugar']
     )
 
 
@@ -101,9 +101,9 @@ async def dessert_berries(update: Update, context: ContextTypes.DEFAULT_TYPE):
         update,
         context,
         YES_NO,
-        "Would you like berries in your dessert?",
+        strs['dessert_berries_prompt'],
         State.dessert_berries,
-        user_data_key="Dessert with berries"
+        user_data_key=strs['dessert_berries']
     )
 
 
@@ -112,10 +112,10 @@ async def flavor(update: Update, context: ContextTypes.DEFAULT_TYPE):
         update,
         context,
         FoodOptions.flavor,
-        "What flavor would you like to be predominant in your dish?",
+        strs['main_flavor_prompt'],
         State.flavor,
-        user_data_key="Predominant flavor",
-        placeholder="Predominant flavor"
+        user_data_key=strs['main_flavor'],
+        placeholder=strs['main_flavor']
     )
 
 
@@ -124,10 +124,10 @@ async def spicy_level(update: Update, context: ContextTypes.DEFAULT_TYPE):
         update,
         context,
         FoodOptions.spicy_level,
-        "How spicy would you like your dish?",
+        strs['spicy_level_prompt'],
         State.spicy_level,
-        user_data_key="Spiciness level",
-        placeholder="Spiciness level"
+        user_data_key=strs['spicy_level'],
+        placeholder=strs['spicy_level']
     )
 
 
@@ -136,10 +136,10 @@ async def main_ingredient(update: Update, context: ContextTypes.DEFAULT_TYPE):
         update,
         context,
         FoodOptions.main_ingredient,
-        "What main ingredient would you like your dish to have?",
+        strs['main_ingredient_prompt'],
         State.main_ingredient,
-        user_data_key="Main ingredient",
-        placeholder="Main ingredient"
+        user_data_key=strs['main_ingredient'],
+        placeholder=strs['main_ingredient']
     )
 
 
@@ -148,10 +148,10 @@ async def meat(update: Update, context: ContextTypes.DEFAULT_TYPE):
         update,
         context,
         FoodOptions.meat_type,
-        "What kind of meat would you like?",
+        strs['meat_type_prompt'],
         State.meat_type,
-        user_data_key="Meat kind",
-        placeholder="Meat kind"
+        user_data_key=strs['meat_type'],
+        placeholder=strs['meat_type']
     )
 
 
@@ -160,8 +160,8 @@ async def seafood(update: Update, context: ContextTypes.DEFAULT_TYPE):
         update,
         context,
         FoodOptions.seafood_type,
-        "What kind of seafood would you like?",
+        strs['seafood_type_prompt'],
         State.seafood_type,
-        user_data_key="Seafood kind",
-        placeholder="Seafood kind"
+        user_data_key=strs['seafood_type'],
+        placeholder=strs['seafood_type']
     )

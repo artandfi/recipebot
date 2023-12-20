@@ -2,13 +2,13 @@ from enum import Enum
 from telegram import Update, ReplyKeyboardMarkup
 from telegram.ext import ContextTypes
 from states import State
-from callbacks.basic import command_with_buttons, YES_NO
+from callbacks.basic import command_with_buttons, strs, YES_NO
 
 
 class DrinkOptions(Enum):
-    drink_type = ["Juice", "Tea", "Coffee", "Other"]
-    tea_type = ["Green", "Black", "White", "Herbal"]
-    herbal_tea_effect = ["Calm Down", "Energize", "Fall Asleep Faster", "Relieve Cough"]
+    drink_type = [strs[x] for x in ['juice', 'tea', 'coffee', 'other']]
+    tea_type = [strs[x] for x in ['green', 'black', 'white', 'herbal']]
+    herbal_tea_effect = [strs[x] for x in ['calm_down', 'energize', 'fall_asleep', 'relieve_cough']]
 
 
 async def drink(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -16,10 +16,10 @@ async def drink(update: Update, context: ContextTypes.DEFAULT_TYPE):
         update,
         context,
         DrinkOptions.drink_type,
-        "Please choose the type of the drink",
+        strs['drink_type_prompt'],
         State.drink_type,
-        user_data_key="Drink type",
-        placeholder="Drink type"
+        user_data_key=strs['drink_type'],
+        placeholder=strs['drink_type']
     )
 
 
@@ -28,9 +28,9 @@ async def juice_fruit(update: Update, context: ContextTypes.DEFAULT_TYPE):
         update,
         context,
         YES_NO,
-        "Would you like a fruit juice?",
+        strs['fruit_juice_prompt'],
         State.juice_fruit,
-        user_data_key="Fruit juice"
+        user_data_key=strs['fruit_juice']
     )
 
 
@@ -39,9 +39,9 @@ async def juice_veggie(update: Update, context: ContextTypes.DEFAULT_TYPE):
         update,
         context,
         YES_NO,
-        "Would you like a veggie juice?",
+        strs['veggie_juice_prompt'],
         State.juice_veggie,
-        user_data_key="Veggie juice"
+        user_data_key=strs['veggie_juice']
     )
 
 
@@ -50,10 +50,10 @@ async def tea_type(update: Update, context: ContextTypes.DEFAULT_TYPE):
         update,
         context,
         DrinkOptions.tea_type,
-        "What type of tea would you like?",
+        strs['tea_type_prompt'],
         State.tea_type,
-        user_data_key="Tea type",
-        placeholder="Tea type"
+        user_data_key=strs['tea_type'],
+        placeholder=strs['tea_type']
     )
 
 
@@ -62,10 +62,10 @@ async def herbal_tea_effect(update: Update, context: ContextTypes.DEFAULT_TYPE):
         update,
         context,
         DrinkOptions.herbal_tea_effect,
-        "What effect would you like your herbal tea to have?",
+        strs['tea_effect_prompt'],
         State.herbal_tea_effect,
-        user_data_key="Herbal tea effect",
-        placeholder="Herbal tea effect"
+        user_data_key=strs['tea_effect'],
+        placeholder=strs['tea_effect']
     )
 
 
@@ -74,7 +74,7 @@ async def coffee_milk(update: Update, context: ContextTypes.DEFAULT_TYPE):
         update,
         context,
         YES_NO,
-        "Do you want milk in your coffee?",
+        strs['coffee_milk_prompt'],
         State.coffee_milk,
-        user_data_key="Coffee with milk"
+        user_data_key=strs['coffee_milk']
     )

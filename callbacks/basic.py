@@ -1,16 +1,22 @@
+import json
 from typing import Iterable
 from enum import Enum
 from telegram import Update, ReplyKeyboardMarkup
 from telegram.ext import ContextTypes
 from states import State
 from chatgpt import chatgpt_response
+from config import STRINGS_PATH
 
 
-YES_NO = ["Yes", "No"]
+with open(STRINGS_PATH) as f:
+    strs = json.load(f)
+
+
+YES_NO = [strs['yes'], strs['no']]
 
 
 class BasicOptions(Enum):
-    food_or_drink = ["Food", "Drink"]
+    food_or_drink = [strs['food'], strs['drink']]
 
 
 def buttons(options: Enum | Iterable):
@@ -48,15 +54,15 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     user = update.effective_user
 
     await update.message.reply_text(
-        f"Hi {user.full_name}! I am here to help you choose what to cook. Do you want to cook food or a drink?",
+        f"{strs['hi']} {user.full_name}! {strs['initial_prompt']}",
         reply_markup=ReplyKeyboardMarkup(
             reply_keyboard,
             one_time_keyboard=True,
-            input_field_placeholder="What to cook"
+            input_field_placeholder=strs['what_to_cook']
         )
     )
 
-    context.user_data['latest_key'] = "What to cook"
+    context.user_data['latest_key'] = strs['what_to_cook']
     return State.food_or_drink
 
 
@@ -64,29 +70,29 @@ async def additional(update: Update, context: ContextTypes.DEFAULT_TYPE):
     return await command_with_buttons(
         update,
         context,
-        ["Skip"],
-        "You may also list any additional details about your meal, or press 'Skip' if you don't want to",
+        [strs['skip']],
+        strs['details_prompt'],
         State.additional,
-        user_data_key='Additional details',
-        placeholder='Additional details'
+        user_data_key=strs['details'],
+        placeholder=strs['details']
     )
 
 
 async def recipe(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    if update.message.text != 'Skip':
-        context.user_data['Additional details'] = update.message.text
+    if update.message.text != strs['skip']:
+        context.user_data[strs['details']] = update.message.text
     
     del context.user_data['latest_key']
 
     preferences = '\n'.join([f"{key}: {value}" for key, value in context.user_data.items()])
 
     await update.message.reply_text(
-        f"Summary\n-----\n{preferences}\n-----\nPlease wait while a recipe is being retrieved..."
+        f"{strs['summary']}\n-----\n{preferences}\n-----\n{strs['wait']}"
     )
 
     await update.message.reply_text(
         chatgpt_response(
-            f"Hi! Please give me a recipe of your choice with the following requirements:\n{preferences}"
+            f"{strs['chatgpt_prompt']}\n{preferences}"
         )
     )
 
@@ -95,14 +101,14 @@ async def recipe(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def help(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Send a message when the command /help is issued."""
-    await update.message.reply_text("Help text")
+    await update.message.reply_text(strs['help'])
 
 
 async def cancel(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    reply_keyboard = buttons(['Start'])
+    reply_keyboard = buttons([strs['start']])
 
     await update.message.reply_text(
-        "Feel free to ask me for another recipe!",
+        strs['ask_another'],
         reply_markup=ReplyKeyboardMarkup(
             reply_keyboard,
             one_time_keyboard=True
