@@ -6,8 +6,8 @@ https://github.com/artandfi/recipebot/assets/28676554/2503d90b-f623-401c-823f-dd
 
 ### Що приБотувати
 
-Що приБотувати - це бот, що підбирає вам рецепт для приготування, поставивши декілька запитань. Запитання розгалужуються на базі ваших відповідей. Усі зазначені параметри рецепту передаються ChatGPT, від якої отримується рецепт та показується вам.
+Що приБотувати - це бот, що підбирає вам рецепт для приготування, ставлячи декілька запитань. Запитання розгалужуються на базі ваших відповідей. Усі зазначені параметри рецепту передаються ChatGPT, від якої отримується рецепт та показується вам.
 
 ### QCocino
 
-QCocino es un bot que le recomenda a usted una receta haciendo varios preguntas. Las preguntas se bifurcan según sus respuestas. Todos los parámetros especificados se introducen en ChatGPT, del cuál la receta se obtiene y le se demostra a usted.
+QCocino es un bot que le recomenda a usted una receta haciendo varias preguntas. Las preguntas se bifurcan según sus respuestas. Todos los parámetros especificados se introducen en ChatGPT, del cuál la receta se obtiene y le se demostra a usted.
