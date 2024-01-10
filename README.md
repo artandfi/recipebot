@@ -14,6 +14,6 @@ https://github.com/artandfi/what2cook-bot/assets/28676554/c934d49e-aa14-47f0-b80
 
 ### QCocino
 
-QCocino es un bot que le recomenda a usted una receta haciendo varias preguntas. Las preguntas se bifurcan según sus respuestas. Todos los parámetros especificados se introducen en ChatGPT, del cuál la receta se obtiene y le se demostra a usted.
+QCocino es un bot que le recomenda a usted una receta haciendo varias preguntas. Las preguntas se bifurcan según sus respuestas. Todos los parámetros especificados se introducen en ChatGPT, del cuál la receta se obtiene y le se demuestra a usted.
 
 https://github.com/artandfi/what2cook-bot/assets/28676554/ee3cd238-830d-4a6b-8267-12c941736aa3
